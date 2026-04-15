@@ -1,266 +1,404 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Aven • Ravenya</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-    <style>
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aven · Ravenya</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-        html, body {
-            height: 100%;
-            background: #EDE9F6;
-            font-family: 'DM Sans', sans-serif;
-        }
+    html, body {
+      height: 100%;
+      background: #EDE9F6;
+      font-family: 'DM Sans', sans-serif;
+    }
 
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-            padding: 40px 20px;
-        }
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
 
-        .header-text {
-            text-align: center;
-            margin-bottom: 40px;
-        }
+    .chat-container {
+      width: 100%;
+      max-width: 480px;
+      height: calc(100vh - 32px);
+      max-height: 780px;
+      display: flex;
+      flex-direction: column;
+      background: #EDE9F6;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(19,16,43,0.15);
+    }
 
-        .header-text h1 {
-            font-size: 2.5rem;
-            font-weight: 500;
-            color: #2c2c2c;
-            margin-bottom: 8px;
-        }
+    /* HEADER */
+    .header {
+      background: #13102B;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      flex-shrink: 0;
+    }
 
-        .header-text p {
-            font-size: 1rem;
-            font-weight: 300;
-            color: #666;
-        }
+    .icon-box {
+      width: 38px; height: 38px;
+      background: #EDE9F6;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 700px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            padding: 32px;
-        }
+    .header-text .logo {
+      font-size: 18px; font-weight: 500;
+      color: #EDE9F6; letter-spacing: -0.3px;
+    }
 
-        .icon-box {
-            width: 64px;
-            height: 64px;
-            margin: 0 auto 24px auto;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .header-text .logo sup { font-size: 9px; opacity: 0.55; vertical-align: super; }
 
-        .icon-box svg {
-            width: 36px;
-            height: 36px;
-            fill: white;
-        }
+    .header-text .sub {
+      font-size: 11px; color: rgba(237,233,246,0.42);
+      margin-top: 1px;
+    }
 
-        h2 {
-            text-align: center;
-            margin-bottom: 8px;
-            font-size: 1.75rem;
-            font-weight: 500;
-            color: #2c2c2c;
-        }
+    .status {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 6px;
+    }
 
-        .subtitle {
-            text-align: center;
-            margin-bottom: 24px;
-            font-size: 0.95rem;
-            color: #666;
-            font-weight: 300;
-        }
+    .dot-green {
+      width: 7px; height: 7px;
+      background: #6EE7A0; border-radius: 50%;
+      animation: pulse 2s ease infinite;
+    }
 
-        label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: 500;
-            color: #333;
-            font-size: 0.9rem;
-        }
+    @keyframes pulse {
+      0%,100% { opacity: 1; } 50% { opacity: 0.35; }
+    }
 
-        textarea {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.95rem;
-            resize: vertical;
-            min-height: 120px;
-            margin-bottom: 20px;
-            transition: border-color 0.2s;
-        }
+    .status-label {
+      font-size: 11px; color: rgba(237,233,246,0.45);
+    }
 
-        textarea:focus {
-            outline: none;
-            border-color: #667eea;
-        }
+    /* MESSAGES */
+    .messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 20px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scroll-behavior: smooth;
+    }
 
-        button {
-            width: 100%;
-            padding: 14px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
+    .messages::-webkit-scrollbar { width: 4px; }
+    .messages::-webkit-scrollbar-track { background: transparent; }
+    .messages::-webkit-scrollbar-thumb { background: rgba(19,16,43,0.15); border-radius: 4px; }
 
-        button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
-        }
+    .msg {
+      display: flex;
+      flex-direction: column;
+      max-width: 85%;
+      animation: fadeUp 0.2s ease;
+    }
 
-        button:active {
-            transform: translateY(0);
-        }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-        button:disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none;
-        }
+    .msg.user { align-self: flex-end; align-items: flex-end; }
+    .msg.assistant { align-self: flex-start; align-items: flex-start; }
 
-        #response {
-            margin-top: 24px;
-            padding: 20px;
-            background: #f8f9fa;
-            border-radius: 8px;
-            border-left: 4px solid #667eea;
-            white-space: pre-wrap;
-            font-size: 0.95rem;
-            line-height: 1.6;
-            color: #333;
-            display: none;
-        }
+    .msg-label {
+      font-size: 10px; font-weight: 500;
+      color: rgba(19,16,43,0.35);
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
 
-        #response.show {
-            display: block;
-        }
+    .bubble {
+      padding: 11px 14px;
+      border-radius: 15px;
+      font-size: 14px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+    }
 
-        .loading {
-            display: inline-block;
-            width: 16px;
-            height: 16px;
-            border: 2px solid #ffffff;
-            border-radius: 50%;
-            border-top-color: transparent;
-            animation: spin 0.8s linear infinite;
-            margin-right: 8px;
-            vertical-align: middle;
-        }
+    .msg.user .bubble {
+      background: #13102B;
+      color: #EDE9F6;
+      border-bottom-right-radius: 3px;
+    }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+    .msg.assistant .bubble {
+      background: #ffffff;
+      color: #13102B;
+      border-bottom-left-radius: 3px;
+      border: 0.5px solid rgba(19,16,43,0.08);
+    }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 24px;
-            }
-            h2 {
-                font-size: 1.5rem;
-            }
-            .header-text h1 {
-                font-size: 2rem;
-            }
-        }
-    </style>
+    /* TYPING */
+    .typing-wrap {
+      align-self: flex-start;
+    }
+
+    .typing {
+      display: flex; gap: 5px; align-items: center;
+      padding: 11px 14px;
+      background: #fff;
+      border-radius: 15px; border-bottom-left-radius: 3px;
+      border: 0.5px solid rgba(19,16,43,0.08);
+      width: fit-content;
+    }
+
+    .t-dot {
+      width: 6px; height: 6px;
+      background: #9B8FC4; border-radius: 50%;
+      animation: bob 1.1s ease infinite;
+    }
+    .t-dot:nth-child(2) { animation-delay: 0.18s; }
+    .t-dot:nth-child(3) { animation-delay: 0.36s; }
+
+    @keyframes bob {
+      0%,60%,100% { transform: translateY(0); opacity: 0.3; }
+      30% { transform: translateY(-5px); opacity: 1; }
+    }
+
+    /* INPUT */
+    .input-area {
+      background: #fff;
+      border-top: 0.5px solid rgba(19,16,43,0.07);
+      padding: 12px 14px;
+      display: flex; gap: 9px; align-items: flex-end;
+      flex-shrink: 0;
+    }
+
+    textarea {
+      flex: 1;
+      border: 0.5px solid rgba(19,16,43,0.13);
+      border-radius: 12px;
+      padding: 10px 13px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      color: #13102B;
+      resize: none; outline: none;
+      min-height: 42px; max-height: 120px;
+      background: #F8F6FC;
+      line-height: 1.5;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    textarea::placeholder { color: rgba(19,16,43,0.35); }
+    textarea:focus { border-color: rgba(19,16,43,0.3); background: #fff; }
+
+    .send-btn {
+      width: 42px; height: 42px;
+      background: #13102B; border: none;
+      border-radius: 12px; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .send-btn:hover { opacity: 0.82; }
+    .send-btn:active { transform: scale(0.95); }
+    .send-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    .send-btn svg {
+      width: 17px; height: 17px;
+      stroke: #EDE9F6; fill: none;
+      stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* FOOTER */
+    .footer {
+      background: #fff;
+      text-align: center;
+      padding: 8px;
+      font-size: 10px;
+      color: rgba(19,16,43,0.25);
+      letter-spacing: 0.3px;
+      border-top: 0.5px solid rgba(19,16,43,0.05);
+      flex-shrink: 0;
+    }
+
+    /* MOBILE */
+    @media (max-width: 520px) {
+      body { padding: 0; align-items: stretch; }
+      .chat-container {
+        max-width: 100%;
+        height: 100vh;
+        max-height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+      }
+    }
+  </style>
 </head>
 <body>
-    <div class="header-text">
-        <h1>Aven</h1>
-        <p>Sistema de Geração de Pacientes em 7 dias</p>
+       <div class="header-text">
+        <div class="logo">ravenya<sup>®</sup></div>
+        <div class="sub">Aven · Geração de Pacientes em 7 dias</div>
+      </div>
+      <div class="status">
+        <div class="dot-green"></div>
+        <span class="status-label">online</span>
+      </div>
     </div>
 
-    <div class="container">
-        <div class="icon-box">
-            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
-            </svg>
-        </div>
-        
-        <h2>Assistente de IA</h2>
-        <p class="subtitle">Olá! Eu sou a Ave. Estou pronta para te ajudar a gerar pacientes em 7 dias.</p>
-        
-        <label for="input">Digite sua mensagem:</label>
-        <textarea 
-            id="input" 
-            placeholder="Digite sua pergunta ou solicitação aqui..."
-        ></textarea>
-        
-        <button id="sendBtn">Enviar Mensagem</button>
-        
-        <div id="response"></div>
+    <div class="messages" id="messages"></div>
+
+    <div class="input-area">
+      <textarea
+        id="input"
+        placeholder="Responda a Ave aqui..."
+        rows="1"
+      ></textarea>
+      <button class="send-btn" id="sendBtn" aria-label="Enviar">
+        <svg viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="11" y2="13"/>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+      </button>
     </div>
 
-    <script>
-        const inputEl = document.getElementById('input');
-        const sendBtn = document.getElementById('sendBtn');
-        const responseDiv = document.getElementById('response');
+    <div class="footer">ravenya® · Ave · Powered by IA</div>
+  </div>
 
-        async function sendMessage() {
-            const message = inputEl.value.trim();
-            if (!message) return;
+  <script>
+    const messagesEl = document.getElementById('messages');
+    const inputEl = document.getElementById('input');
+    const sendBtn = document.getElementById('sendBtn');
 
-            sendBtn.disabled = true;
-            sendBtn.innerHTML = '<span class="loading"></span>Enviando...';
-            responseDiv.classList.remove('show');
+    let history = [];
+    let busy = false;
 
-            try {
-                const res = await fetch('/api/chat', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message })
-                });
+    function scrollBottom() {
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
 
-                const data = await res.json();
-                
-                if (data.error) {
-                    responseDiv.textContent = 'Erro: ' + data.error;
-                } else {
-                    responseDiv.textContent = data.response;
-                }
-                
-                responseDiv.classList.add('show');
-            } catch (error) {
-                responseDiv.textContent = 'Erro ao conectar com o servidor.';
-                responseDiv.classList.add('show');
-            } finally {
-                sendBtn.disabled = false;
-                sendBtn.textContent = 'Enviar Mensagem';
-            }
+    function addMessage(role, text) {
+      const wrap = document.createElement('div');
+      wrap.className = `msg ${role}`;
+
+      const label = document.createElement('div');
+      label.className = 'msg-label';
+      label.textContent = role === 'user' ? 'Você' : 'Ave';
+
+      const bubble = document.createElement('div');
+      bubble.className = 'bubble';
+      bubble.textContent = text;
+
+      wrap.appendChild(label);
+      wrap.appendChild(bubble);
+      messagesEl.appendChild(wrap);
+      scrollBottom();
+      return wrap;
+    }
+
+    function showTyping() {
+      const wrap = document.createElement('div');
+      wrap.className = 'msg assistant typing-wrap';
+      wrap.id = 'typing-indicator';
+
+      const label = document.createElement('div');
+      label.className = 'msg-label';
+      label.textContent = 'Ave';
+
+      const t = document.createElement('div');
+      t.className = 'typing';
+      t.innerHTML = '<div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>';
+
+      wrap.appendChild(label);
+      wrap.appendChild(t);
+      messagesEl.appendChild(wrap);
+      scrollBottom();
+    }
+
+    function removeTyping() {
+      const t = document.getElementById('typing-indicator');
+      if (t) t.remove();
+    }
+
+    async function callAPI(messages) {
+      const response = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages })
+      });
+      const data = await response.json();
+      return data.content?.map(b => b.text || '').join('') || '';
+    }
+
+    async function sendMessage() {
+      const text = inputEl.value.trim();
+      if (!text || busy) return;
+
+      busy = true;
+      sendBtn.disabled = true;
+      inputEl.value = '';
+      inputEl.style.height = 'auto';
+
+      addMessage('user', text);
+      history.push({ role: 'user', content: text });
+
+      showTyping();
+
+      try {
+        const reply = await callAPI(history);
+        removeTyping();
+        if (reply) {
+          history.push({ role: 'assistant', content: reply });
+          addMessage('assistant', reply);
         }
+      } catch (e) {
+        removeTyping();
+        addMessage('assistant', 'Erro de conexão. Atualize a página e tente novamente.');
+      }
 
-        sendBtn.addEventListener('click', sendMessage);
+      busy = false;
+      sendBtn.disabled = false;
+      inputEl.focus();
+    }
 
-        inputEl.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                sendMessage();
-            }
-        });
+    async function init() {
+      showTyping();
+      try {
+        const initMsg = [{ role: 'user', content: 'Inicie a conversa com sua apresentação padrão.' }];
+        const reply = await callAPI(initMsg);
+        removeTyping();
+        if (reply) {
+          history.push(initMsg[0], { role: 'assistant', content: reply });
+          addMessage('assistant', reply);
+        }
+      } catch (e) {
+        removeTyping();
+        addMessage('assistant', 'Olá! Eu sou a Ave. Estou pronta para te ajudar a gerar pacientes em 7 dias. Como posso começar?');
+      }
+    }
 
-        sendBtn.addEventListener('click', sendMessage);
+    inputEl.addEventListener('input', () => {
+      inputEl.style.height = 'auto';
+      inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+    });
 
-        init();
-    </script>
+    inputEl.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    });
+
+    sendBtn.addEventListener('click', sendMessage);
+
+    init();
+  </script>
 </body>
 </html>
+

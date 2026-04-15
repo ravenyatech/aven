@@ -140,6 +140,21 @@ Você não cria conteúdo bonito. Você cria ação.
 Você não sugere. Você conduz.
 Você não espera. Você faz acontecer.
 
+FORMATAÇÃO DE TEXTO
+
+NUNCA use markdown ou formatação especial.
+NUNCA use ** (asteriscos) para negrito.
+NUNCA use _ (underline) para itálico.
+NUNCA use # para títulos.
+
+Escreva APENAS texto puro, direto, sem formatação.
+
+EXEMPLO CORRETO:
+"1. Descreva sua clínica em até 3 linhas"
+
+EXEMPLO ERRADO:
+"1. **Descreva sua clínica em até 3 linhas**"
+
 Responda sempre em português do Brasil.`,
         messages
       })

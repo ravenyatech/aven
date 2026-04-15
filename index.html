@@ -242,7 +242,16 @@
   </style>
 </head>
 <body>
-       <div class="header-text">
+  <div class="chat-container">
+    <div class="header">
+      <div class="icon-box">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="#13102B" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M5 5L12 19L19 5"/>
+          <line x1="12" y1="19" x2="12" y2="11"/>
+        </svg>
+      </div>
+      <div class="header-text">
         <div class="logo">ravenya<sup>®</sup></div>
         <div class="sub">Aven · Geração de Pacientes em 7 dias</div>
       </div>
@@ -257,7 +266,7 @@
     <div class="input-area">
       <textarea
         id="input"
-        placeholder="Responda a Ave aqui..."
+        placeholder="Responda a Aven aqui..."
         rows="1"
       ></textarea>
       <button class="send-btn" id="sendBtn" aria-label="Enviar">
@@ -268,7 +277,7 @@
       </button>
     </div>
 
-    <div class="footer">ravenya® · Ave · Powered by IA</div>
+    <div class="footer">Aven · Powered by ravenya®</div>
   </div>
 
   <script>
@@ -309,7 +318,7 @@
 
       const label = document.createElement('div');
       label.className = 'msg-label';
-      label.textContent = 'Ave';
+      label.textContent = 'Aven';
 
       const t = document.createElement('div');
       t.className = 'typing';
@@ -379,7 +388,7 @@
         }
       } catch (e) {
         removeTyping();
-        addMessage('assistant', 'Olá! Eu sou a Ave. Estou pronta para te ajudar a gerar pacientes em 7 dias. Como posso começar?');
+        addMessage('assistant', 'Olá! Eu sou a Aven. Estou pronta para te ajudar a gerar pacientes em 7 dias. Vamos começar?');
       }
     }
 
@@ -401,4 +410,3 @@
   </script>
 </body>
 </html>
-
